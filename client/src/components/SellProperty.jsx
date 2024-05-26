@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const SellProperty = () => {
   const { user } = useContext(UserContext);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     seller_id: user ? user.id : "",
