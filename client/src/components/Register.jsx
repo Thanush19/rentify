@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { backend } from "../../constant"; // Ensure this points to your backend URL
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +14,7 @@ function Register() {
     password: "",
     role: "buyer",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +24,33 @@ function Register() {
     }));
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Add your register logic here
-    console.log("Register", formData);
+    try {
+      const { firstName, lastName, phoneNumber, ...rest } = formData;
+      const payload = {
+        first_name: firstName,
+        last_name: lastName,
+        phone_number: phoneNumber,
+        ...rest,
+      };
+      const response = await axios.post(
+        `${backend}/api/users/register`,
+        payload
+      );
+      console.log("Register successful:", response.data);
+      // Handle successful registration here (e.g., redirect to login, show success message)
+    } catch (error) {
+      console.error(
+        "Error registering:",
+        error.response?.data || error.message
+      );
+      // Handle registration error here (e.g., show error message)
+    }
   };
 
   return (
@@ -90,16 +118,21 @@ function Register() {
               className="w-full px-3 py-2 border rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              onClick={toggleShowPassword}
+              className="absolute right-3 top-9 cursor-pointer text-gray-700"
             />
           </div>
           <div className="mb-6">
