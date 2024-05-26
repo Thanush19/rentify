@@ -1,38 +1,44 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext"; // Adjust the import path as necessary
-import { Navigate } from "react-router-dom"; // Import Navigate component
 
-const BuyerHome = () => {
+const SellerHome = () => {
   const { logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleSellProperty = () => {
+    navigate("/sell-property"); // Redirect to the Sell Property page
+  };
 
   const handleLogout = () => {
-    // Clear authentication token from local storage
-    localStorage.removeItem("authToken");
-
-    // Call logout function from user context to update user state
-    logout();
-
-    // Redirect to login page using Navigate component
-    return <Navigate to="/login" />;
+    logout(); // Call the logout function from UserContext
+    navigate("/login"); // Redirect to the login page after logout
   };
 
-  const handleSurfProperties = () => {
-    // Redirect to Surf Local Properties page
-    // You can use Navigate similarly here if needed
-  };
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900">Buyers Page</h2>
-        <div>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Seller Home Page</h2>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
             onClick={handleLogout}
+            className="text-sm text-blue-500 hover:text-blue-700 focus:outline-none"
           >
             Logout
           </button>
+        </div>
+        <div className="space-y-4">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600">
-            Surf Local Properties
+            See Local Map
+          </button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600">
+            See Previous Sold Properties
+          </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+            onClick={handleSellProperty}
+          >
+            Sell Properties
           </button>
         </div>
       </div>
@@ -40,4 +46,4 @@ const BuyerHome = () => {
   );
 };
 
-export default BuyerHome;
+export default SellerHome;

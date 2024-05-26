@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const propertyRoutes = require("./routes/propertyRoutes");
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/users", userRoutes);
+app.use("/api", propertyRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not Found" });

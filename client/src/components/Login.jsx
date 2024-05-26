@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext"; // Adjust the import path as necessary
 import { backend } from "../../constant"; // Ensure this points to your backend URL
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 function Login() {
   const { user, login } = useContext(UserContext);
@@ -80,13 +80,19 @@ function Login() {
               className="w-full px-3 py-2 border rounded text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               Login
             </button>
+            <Link
+              to="/register"
+              className="text-blue-500 hover:text-blue-700 font-bold"
+            >
+              Sign Up
+            </Link>
           </div>
         </form>
       </div>

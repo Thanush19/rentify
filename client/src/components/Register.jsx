@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { backend } from "../../constant"; // Ensure this points to your backend URL
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link, Navigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,15 @@ function Register() {
     role: "buyer",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    // Check if user is already registered (e.g., based on a flag in local storage)
+    const isUserRegistered = localStorage.getItem("isRegistered");
+    if (isUserRegistered) {
+      setIsRegistered(true);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +54,8 @@ function Register() {
       );
       console.log("Register successful:", response.data);
       // Handle successful registration here (e.g., redirect to login, show success message)
+      localStorage.setItem("isRegistered", "true"); // Set flag in local storage
+      setIsRegistered(true); // Update state
     } catch (error) {
       console.error(
         "Error registering:",
@@ -52,6 +64,10 @@ function Register() {
       // Handle registration error here (e.g., show error message)
     }
   };
+
+  if (isRegistered) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -148,7 +164,7 @@ function Register() {
               <option value="buyer">Buyer</option>
               <option value="seller">Seller</option>
             </select>
-          </div>
+          </div>{" "}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -156,6 +172,12 @@ function Register() {
             >
               Register
             </button>
+            <Link
+              to="/login"
+              className="text-blue-500 hover:text-blue-700 font-bold"
+            >
+              Already have an account? Login
+            </Link>
           </div>
         </form>
       </div>

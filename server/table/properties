@@ -1,0 +1,17 @@
+CREATE TABLE properties (
+    id SERIAL PRIMARY KEY,
+    seller_id INTEGER REFERENCES users(id),
+    username VARCHAR(50) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    property_type VARCHAR(50) NOT NULL,
+    seller_name VARCHAR(100) NOT NULL,
+    land_address VARCHAR(255) NOT NULL,
+    land_image TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE properties
+ADD landmark VARCHAR(100);
+
+-- Add description column
+ALTER TABLE properties
+ADD description TEXT;

@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import SellerHome from "./components/SellerHome";
 import BuyerHome from "./components/BuyerHome";
+import SellProperty from "./components/SellProperty";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
         <Route path="/login" element=<Login /> />
         <Route path="/seller-home" element=<SellerHome /> />
         <Route path="/buyer-home" element=<BuyerHome /> />
+        <Route path="/sell-property" element=<SellProperty /> />
       </Routes>
     </>
   );
