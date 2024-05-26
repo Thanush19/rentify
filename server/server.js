@@ -32,7 +32,9 @@ const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/users", userRoutes);
 app.use("/api", propertyRoutes);
-
+app.get("/", (req, res) => {
+  res.send("Endpoints are working");
+});
 app.use((req, res) => {
   res.status(404).json({ message: "Not Found" });
 });
